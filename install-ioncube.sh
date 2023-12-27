@@ -16,7 +16,7 @@ wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.t
 tar xzf ioncube_loaders_lin_x86-64.tar.gz
 
 # Determine the PHP extension directory
-PHP_EXT_DIR=$(php -r "echo ini_get('extension_dir');")
+PHP_EXT_DIR=$(php7.4 -r "echo ini_get('extension_dir');")
 
 # Copy the IonCube Loader to the PHP extension directory
 sudo cp ioncube/ioncube_loader_lin_7.4.so $PHP_EXT_DIR
