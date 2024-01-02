@@ -1,4 +1,22 @@
-# Ioncube installer for Ubuntu (php7.4 on nginx)
-I grew weary of the repetitive task of manually installing the Roundcube loader on each machine during the configuration process. Consequently, I have developed a solution to streamline this process. By default, this script automates the installation of the PHP 7.4 loader for NGINX, with a specific focus on the Ubuntu operating system.
+# Ioncube installer for Ubuntu (nginx)
 
-``` bash <(curl -s https://raw.githubusercontent.com/Crujera27/install-ioncube-ubntu-php7.4/main/install-ioncube.sh) ```
+Initially, I developed this script out of the need to streamline the installation process across multiple systems. Subsequently, I decided to share it, and it is intended for use specifically on Ubuntu 22 with a pre-existing installation of Nginx.
+
+# Supported PHP Versions
+| Version | Supported |
+|--|--|
+| php8.2 | 🟢 |
+| php8.1 | 🟢 |
+| php8.0 | 🟢 |
+| php7.4 | 🟢 The script was originally made to support this version |
+| php7.3 | 🟢 |
+| php7.2 | 🟢 |
+| php5| 🔴Probably won't be supported |
+| php4| 🔴Probably won't be supported |
+
+
+
+# Deployment and Execution of the Script
+
+``` bash <(curl -s https://raw.githubusercontent.com/Crujera27/install-ioncube-ubuntu/main/install-ioncube.sh) ```
+
