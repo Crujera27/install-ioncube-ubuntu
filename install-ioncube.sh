@@ -26,6 +26,7 @@ echo "2. PHP 7.3"
 echo "3. PHP 7.2"
 echo "4. PHP 8.0"
 echo "5. PHP 8.1"
+echo "6. PHP 8.2"
 read -p "Enter your choice (1, 2, 3, 4 or 5): " version_choice
 
 case $version_choice in
@@ -34,6 +35,7 @@ case $version_choice in
     3) PHP_VERSION="7.2";;
     4) PHP_VERSION="8.0";;
     5) PHP_VERSION="8.1";;
+    6) PHP_VERSION="8.2";;
     *) echo "Invalid choice. Exiting."; exit 1;;
 esac
 
