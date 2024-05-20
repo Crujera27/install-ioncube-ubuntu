@@ -54,7 +54,7 @@ esac
 
 cd /tmp
 
-wget "https://nilisms.ir/ioncube_loaders_lin_x86-64.tar.gz"
+
 tar xzf ioncube_loaders_lin_x86-64.tar.gz
 
 PHP_EXT_DIR=$(php${PHP_VERSION} -r "echo ini_get('extension_dir');")
