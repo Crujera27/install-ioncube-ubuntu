@@ -11,7 +11,7 @@ if [ "$proceed_choice" != "y" ]; then
 fi
 
 sudo apt update
-sudo apt install wget tar
+sudo apt install -y wget tar
 echo ".___                          ___.            .__                 __         .__  .__                
 |   | ____   ____   ____  __ _\_ |__   ____   |__| ____   _______/  |______  |  | |  |   ___________ 
 |   |/  _ \ /    \_/ ___\|  |  \ __ \_/ __ \  |  |/    \ /  ___/\   __\__  \ |  | |  | _/ __ \_  __ \
@@ -27,7 +27,7 @@ echo "3. PHP 7.2"
 echo "4. PHP 8.0"
 echo "5. PHP 8.1"
 echo "6. PHP 8.2"
-read -p "Enter your choice (1, 2, 3, 4 or 5): " version_choice
+read -p "Enter your choice (1, 2, 3, 4, 5, or 6): " version_choice
 
 case $version_choice in
     1) PHP_VERSION="7.4";;
@@ -60,7 +60,11 @@ tar xzf ioncube_loaders_lin_x86-64.tar.gz
 PHP_EXT_DIR=$(php${PHP_VERSION} -r "echo ini_get('extension_dir');")
 sudo cp "ioncube/ioncube_loader_lin_${PHP_VERSION}.so" $PHP_EXT_DIR
 
-echo "zend_extension=$PHP_EXT_DIR/ioncube_loader_lin_${PHP_VERSION}.so" | sudo tee "/etc/php/${PHP_VERSION}/${TARGET}/conf.d/00-ioncube.ini"
+INI_DIR="/etc/php/${PHP_VERSION}/${TARGET}/conf.d"
+if [ ! -d "$INI_DIR" ]; then
+    sudo mkdir -p "$INI_DIR"
+fi
+echo "zend_extension=$PHP_EXT_DIR/ioncube_loader_lin_${PHP_VERSION}.so" | sudo tee "$INI_DIR/00-ioncube.ini"
 
 rm -rf /tmp/ioncube*
 
@@ -72,6 +76,3 @@ PHP_BINARY_PATH=$(which php${PHP_VERSION})
 $PHP_BINARY_PATH -m | grep ionCube
 
 echo "IonCube Loader for PHP $PHP_VERSION has been successfully installed on $TARGET."
-
-rm install-ioncube.sh
-
