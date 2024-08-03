@@ -1,17 +1,24 @@
 #!/bin/bash
 # Copyright (c) 2024 Ángel (Crujera27)
-# Version: 1.3
+# Version: 1.4
 
 echo "WARNING: This script is recommended to be run on a clean system. It may modify your PHP configuration or even break stuff."
 read -p "Do you wish to proceed? (y/n): " proceed_choice
+
+# Convert input to lowercase to handle 'Y' and 'N'
+proceed_choice=$(echo "$proceed_choice" | tr '[:upper:]' '[:lower:]')
 
 if [ "$proceed_choice" != "y" ]; then
     echo "Exiting script. No changes have been made."
     exit 1
 fi
 
-sudo apt update
+echo "Updating package lists..."
+sudo apt update -y
+
+echo "Installing necessary packages..."
 sudo apt install -y wget tar
+
 echo ".___                          ___.            .__                 __         .__  .__                
 |   | ____   ____   ____  __ _\_ |__   ____   |__| ____   _______/  |______  |  | |  |   ___________ 
 |   |/  _ \ /    \_/ ___\|  |  \ __ \_/ __ \  |  |/    \ /  ___/\   __\__  \ |  | |  | _/ __ \_  __ \
@@ -52,27 +59,42 @@ case $target_choice in
     *) echo "Invalid choice. Exiting."; exit 1;;
 esac
 
+echo "Downloading IonCube Loader..."
 cd /tmp
-
 wget "https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz"
 tar xzf ioncube_loaders_lin_x86-64.tar.gz
 
 PHP_EXT_DIR=$(php${PHP_VERSION} -r "echo ini_get('extension_dir');")
+if [ -z "$PHP_EXT_DIR" ]; then
+    echo "Could not determine the PHP extension directory. Exiting."
+    exit 1
+fi
+
+echo "Copying IonCube Loader..."
 sudo cp "ioncube/ioncube_loader_lin_${PHP_VERSION}.so" $PHP_EXT_DIR
 
 INI_DIR="/etc/php/${PHP_VERSION}/${TARGET}/conf.d"
 if [ ! -d "$INI_DIR" ]; then
+    echo "Creating configuration directory $INI_DIR"
     sudo mkdir -p "$INI_DIR"
 fi
 echo "zend_extension=$PHP_EXT_DIR/ioncube_loader_lin_${PHP_VERSION}.so" | sudo tee "$INI_DIR/00-ioncube.ini"
 
-rm -rf /tmp/ioncube*
+echo "Cleaning up..."
+rm -rf /tmp/ioncube_loaders_lin_x86-64.tar.gz /tmp/ioncube*
 
 if [ "$TARGET" == "fpm" ] || [ "$TARGET" == "both" ]; then
+    echo "Restarting PHP-FPM service..."
     sudo service "php${PHP_VERSION}-fpm" restart
 fi
 
 PHP_BINARY_PATH=$(which php${PHP_VERSION})
+if [ -z "$PHP_BINARY_PATH" ]; then
+    echo "PHP binary not found. Exiting."
+    exit 1
+fi
+
+echo "Checking IonCube Loader installation..."
 $PHP_BINARY_PATH -m | grep ionCube
 
 echo "IonCube Loader for PHP $PHP_VERSION has been successfully installed on $TARGET."
