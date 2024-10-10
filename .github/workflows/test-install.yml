@@ -1,0 +1,26 @@
+name: Install IonCube Loader
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  install-ioncube:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3' 
+          extensions: mbstring, xml, curl
+
+      - name: Make script executable
+        run: chmod +x ./install-ioncube.sh
+
+      - name: Run IonCube Loader installation script
+        run: |
+          echo "Proceeding with IonCube installation..."
+          ./install-ioncube.sh

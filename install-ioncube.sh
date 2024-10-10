@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright (c) 2024 Ángel (Crujera27)
-# Version: 1.4
+# Version: 1.5
 
 echo "WARNING: This script is recommended to be run on a clean system. It may modify your PHP configuration or even break stuff."
 read -p "Do you wish to proceed? (y/n): " proceed_choice
@@ -34,7 +34,8 @@ echo "3. PHP 7.2"
 echo "4. PHP 8.0"
 echo "5. PHP 8.1"
 echo "6. PHP 8.2"
-read -p "Enter your choice (1, 2, 3, 4, 5, or 6): " version_choice
+echo "7. PHP 8.3"
+read -p "Enter your choice (1, 2, 3, 4, 5, 6, or 7): " version_choice
 
 case $version_choice in
     1) PHP_VERSION="7.4";;
@@ -43,6 +44,7 @@ case $version_choice in
     4) PHP_VERSION="8.0";;
     5) PHP_VERSION="8.1";;
     6) PHP_VERSION="8.2";;
+    6) PHP_VERSION="8.3";;
     *) echo "Invalid choice. Exiting."; exit 1;;
 esac
 
