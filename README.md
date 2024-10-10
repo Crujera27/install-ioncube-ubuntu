@@ -5,6 +5,7 @@ Initially, I developed this script out of the need to streamline the installatio
 # Supported PHP Versions
 | Version | Supported |
 |--|--|
+| php8.3 | 🟢 |
 | php8.2 | 🟢 |
 | php8.1 | 🟢 |
 | php8.0 | 🟢 |
