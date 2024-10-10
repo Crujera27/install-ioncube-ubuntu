@@ -1,11 +1,11 @@
 name: Install IonCube Loader
 
 on:
-  workflow_dispatch:  # Allows manual triggering of the workflow
+  workflow_dispatch: 
 
 jobs:
   install-ioncube:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -18,7 +18,7 @@ jobs:
           extensions: mbstring, xml, curl
 
       - name: Make script executable
-        run: chmod +x ./install-ioncube.sh  # Ensure your script is executable
+        run: chmod +x ./install-ioncube.sh
 
       - name: Run IonCube Loader installation script
         run: |
